@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>裸机程序hello world | zrf's blog</title><meta name="author" content="zrf,853241825@qq.com"><meta name="copyright" content="zrf"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="通过编写一个小型的裸机 &quot;Hello, World&quot;应用程序开始操作系统开发之旅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="裸机程序hello world">
+<meta property="og:url" content="https://zzzzrf.github.io/2024/07/06/rpi_HelloWorld/index.html">
+<meta property="og:site_name" content="zrf&#39;s blog">
+<meta property="og:description" content="通过编写一个小型的裸机 &quot;Hello, World&quot;应用程序开始操作系统开发之旅。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zzzzrf.github.io/blog_image/rpi_HelloWorld/hello_world.png">
+<meta property="article:published_time" content="2024-07-06T15:42:18.000Z">
+<meta property="article:modified_time" content="2025-02-13T11:53:28.264Z">
+<meta property="article:author" content="zrf">
+<meta property="article:tag" content="Raspberry Pi">
+<meta property="article:tag" content="UART">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zzzzrf.github.io/blog_image/rpi_HelloWorld/hello_world.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "裸机程序hello world",
+  "url": "https://zzzzrf.github.io/2024/07/06/rpi_HelloWorld/",
+  "image": "https://zzzzrf.github.io/blog_image/rpi_HelloWorld/hello_world.png",
+  "datePublished": "2024-07-06T15:42:18.000Z",
+  "dateModified": "2025-02-13T11:53:28.264Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "zrf",
+      "url": "https://zzzzrf.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zzzzrf.github.io/2024/07/06/rpi_HelloWorld/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: zrf","link":"链接: ","source":"来源: zrf's blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '裸机程序hello world',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/back.jpeg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/blog_image/rpi_HelloWorld/hello_world.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">zrf's blog</span></a><a class="nav-page-title" href="/"><span class="site-name">裸机程序hello world</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">裸机程序hello world</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-07-06T15:42:18.000Z" title="发表于 2024-07-06 23:42:18">2024-07-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-13T11:53:28.264Z" title="更新于 2025-02-13 19:53:28">2025-02-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Operating-System/">Operating System</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">5.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>18分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-02-13 19:53:28&quot;}" hidden></div><h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一. 简介"></a>一. 简介</h2><h3 id="1-项目介绍"><a href="#1-项目介绍" class="headerlink" title="1. 项目介绍"></a>1. 项目介绍</h3><p>本项目fork自<a target="_blank" rel="noopener" href="https://github.com/s-matyukevich/raspberry-pi-os">raspberry-pi-os</a></p>
+<p>该库包含一个分步指南，教你如何从零开始创建一个简单的操作系统（OS）内核。源代码在很大程度上基于 Linux 内核，但该操作系统的功能非常有限，而且仅支持 Raspberry PI 3。</p>
+<p>本篇博客会紧跟源项目作者的步伐，通过编写一个小型的裸机 “Hello, World”应用程序开始操作系统开发之旅。</p>
+<p>最后还会记录一些扩展练习的解决思路。</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/1/zrf">引入波特率常数，确保程序可以使用 115200 以外的波特率。</a></li>
+<li><input disabled="" type="checkbox"> 更改操作系统代码，使用 UART 设备而不是 Mini UART。</li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/3/zrf">让每个处理器都打印”hello from &lt;CPU ID&gt;“</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/4/zrf">在qemu上运行kernel8.img</a></li>
+</ul>
+<h3 id="2-目的"><a href="#2-目的" class="headerlink" title="2. 目的"></a>2. 目的</h3><p>以下内容摘自作者对创建这个项目动机的介绍：</p>
+<p>After I realized this, an idea came to me: if the Linux kernel is too vast and too complicated to be used as a starting point for learning OS development, why don’t I implement my own OS that will be explicitly designed for learning purposes? In this way, I can make the OS simple enough to provide a good learning experience. Also, if this OS will be implemented mostly by copying and simplifying different parts of the Linux kernel source, it would be straightforward to use it as a starting point to learn the Linux kernel as well.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">译文：</span><br><span class="line"></span><br><span class="line">意识到这一点后，我萌生了一个想法：既然 Linux 内核过于庞大和复杂，不能作为学习操作系统开发的起点，那我为什么不自己开发一个明确为学习目的而设计的操作系统呢？这样，我就能让操作系统足够简单，从而提供良好的学习体验。而且，如果这个操作系统主要是通过复制和简化 Linux 内核源代码的不同部分来实现的，那么把它作为学习 Linux 内核的起点也会很简单。</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-参考资料"><a href="#二-参考资料" class="headerlink" title="二. 参考资料"></a>二. 参考资料</h2><p><a target="_blank" rel="noopener" href="https://github.com/s-matyukevich/raspberry-pi-os">raspberry-pi-os</a></p>
+<h2 id="三-kernel8-img"><a href="#三-kernel8-img" class="headerlink" title="三. kernel8.img"></a>三. kernel8.img</h2><p>本节按照自顶向下的逻辑，从目的出发，通过问答方式来捋清除kernel8.img的生成与加载流程。</p>
+<h3 id="3-1-制作内核镜像"><a href="#3-1-制作内核镜像" class="headerlink" title="3.1 制作内核镜像"></a>3.1 制作内核镜像</h3><p><strong>疑问1</strong>：我们暂时不谈内核代码要怎么完成，不妨先考虑一下，kernel8.img中都存着什么东西？</p>
+<p>回答：个人认为，里面放着的是一条条的由0&#x2F;1编码的指令，树莓派启动后，会把这个镜像加载到内存中，然后按照顺序执行指令。</p>
+<p>证据：我们通过objdump查看一下kernel8.elf文件中_start标签的指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">zrf@debian:build$ aarch64-linux-gnu-objdump -d kernel8.elf </span><br><span class="line"></span><br><span class="line">kernel8.elf：     文件格式 elf64-littleaarch64</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disassembly of section .text.boot:</span><br><span class="line"></span><br><span class="line">0000000000000000 &lt;_start&gt;:</span><br><span class="line">   0:   d53800a0        mrs     x0, mpidr_el1</span><br><span class="line">   4:   92401c00        and     x0, x0, #0xff</span><br><span class="line">   8:   b4000060        cbz     x0, 14 &lt;master&gt;</span><br><span class="line">   c:   14000001        b       10 &lt;proc_hang&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现字节序是小端字节序，指令为<code>d53800a0</code>,<code>92401c00</code>,<code>b4000060</code>,<code>14000001</code>。</p>
+<p>不妨在使用二进制文本器打开kernel8.img，看看开头都记录了什么：</p>
+<p><img src="/blog_image/rpi_HelloWorld/01.png" alt="kernel8.img"></p>
+<p>可以看出，<code>d53800a0</code>小端字节序在内存中就应该是<code>ao0038d5</code>，刚好是kernel8.img中的前四个字节。</p>
+<p>结论：所以我们需要把最重要的指令放在镜像的开头！</p>
+<p><strong>疑问2</strong>：我们应该如何把kernel8.elf文件打包成kernel8.img文件呢？</p>
+<p>回答：要编写裸机程序，通过objcopy在ELF文件中提取所有可执行程序部分和数据部分，并将它们放入kernel8.img映像中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zrf@debian:build$ <span class="built_in">ls</span></span><br><span class="line">boot_s.d  boot_s.o  kernel8.elf  kernel_c.d  kernel_c.o  mini_uart_c.d  mini_uart_c.o  mm_s.d  mm_s.o  utils_s.d  utils_s.o</span><br><span class="line">zrf@debian:build$ aarch64-linux-gnu-objcopy kernel8.elf -O binary kernel8.img</span><br></pre></td></tr></table></figure>
+
+<p><strong>疑问3</strong>：kernel8.elf怎么生成呢？</p>
+<p>回答：elf文件当然是从一堆.o文件中通过ld命令，链接为一个elf文件的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(ARMGNU)-ld -o kernel8.elf  $(OBJ_FILES)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>疑问4</strong>: elf中的段布局有什么讲究吗？</p>
+<p>回答：有的，根据疑问1得出的结论，我们要把重要的指令放在最前面。</p>
+<p>结论：所以我们需要通过linker.ld文件来自定义镜像的段布局：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash">(ARMGNU)-ld -T $(SRC_DIR)/linker.ld -o kernel8.elf  $(OBJ_FILES)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-elf中的段布局"><a href="#3-2-elf中的段布局" class="headerlink" title="3.2 elf中的段布局"></a>3.2 elf中的段布局</h3><p>详细文档请参考<a target="_blank" rel="noopener" href="https://sourceware.org/binutils/docs/ld/Scripts.html#Scripts">这里</a>。</p>
+<p><strong>疑问1</strong>：EFL文件中都有哪些常用的段呢？</p>
+<p>回答：.text存放代码指令。.data存放已初始化的全局变量和局部静态变量。.bss存放未初始化的全局变量和局部静态变量,默认值都为0。</p>
+<p><strong>疑问2</strong>：我们要针对那些段进行段落布局呢？</p>
+<p>回答：不知道，从结果来说，我们似乎只需要把<code>.text.boot</code>,<code>.text</code>,<code>.rodata</code>,<code>.bss</code>这四个段进行布局就行。如果你有更好的答案，请分享出来。</p>
+<p><strong>疑问3</strong>：解释一下布局脚本linker.ld内容的意思吧</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SECTIONS</span><br><span class="line">&#123;</span><br><span class="line">    .text.boot : &#123; *(.text.boot) &#125;</span><br><span class="line">    .text :  &#123; *(.text) &#125;</span><br><span class="line">    .rodata : &#123; *(.rodata) &#125;</span><br><span class="line">    .data : &#123; *(.data) &#125;</span><br><span class="line">    . = ALIGN(0x8);</span><br><span class="line">    bss_begin = .;</span><br><span class="line">    .bss : &#123; *(.bss*) &#125; </span><br><span class="line">    bss_end = .;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先把最终的与boot启动相关的代码放在最前面。接着存放程序的指令，最后是一些静态变量或者全局变量。</p>
+<p><strong>疑问4</strong>：因为bss_begin和bss_end是为了做什么？</p>
+<p>回答：我们需要手动把.bss段内的数据置0,所以使用这两个符号来标记一下起始与终止位置。</p>
+<h3 id="3-3-选择CPU0"><a href="#3-3-选择CPU0" class="headerlink" title="3.3 选择CPU0"></a>3.3 选择CPU0</h3><p>好了，到目前为止，如果我们把kernel8.img加载到树莓派内存中，他将会从.text.boot中执行指令了！</p>
+<p>树莓派3B有四个核心，我们打算让主核心打印”hello world!”，然后处理串口发来的消息。其他三个核心死循环即可。</p>
+<p><strong>疑问1</strong>：我应该怎么确定当前是CPU0在执行当前指令呢？</p>
+<p>回答：我们需要从<code>mpidr_el1</code>系统寄存器的低8位中获取处理器ID。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mrs    x0, mpidr_el1        </span><br><span class="line">and    x0, x0,#0xFF        // Check processor id</span><br></pre></td></tr></table></figure>
+
+<p><strong>疑问2</strong>：CPU0接下来要作什么呢？是不是可以直接接收串口信息了呢？</p>
+<p>回答：CPU0还需要负责对.bss段进行初始化，还需要设置栈指针呢！</p>
+<h3 id="3-4-清空-bss段"><a href="#3-4-清空-bss段" class="headerlink" title="3.4 清空.bss段"></a>3.4 清空.bss段</h3><p><strong>疑问1</strong>：如何清空.bss段呢？memset可以吗？</p>
+<p>回答：自然不行，我们无法调用libc库呢！需要使用arm指令来编写一个类似<code>memset</code>的函数，这里称之为<code>memzero</code></p>
+<p><strong>疑问2</strong>：既然类似memset，那么总需要知道.bss的起始段大小吧？</p>
+<p>回答：是的，在通过linker.ld链接elf文件时，我们就把起始地址和终止地址保存在<code>bss_begin</code>和<code>bss_end</code>中了，相减就得到了段大小！</p>
+<p><strong>疑问3</strong>：memzero怎么实现呢？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.globl memzero</span><br><span class="line">memzero:</span><br><span class="line">	str xzr, [x0], #8</span><br><span class="line">	subs x1, x1, #8</span><br><span class="line">	b.gt memzero</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+
+<p>回答(以下解释由chatgpt生成)：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">这段代码是用ARM汇编语言实现的一个简单的内存清零函数`memzero`。这个函数接收两个参数：一个指向内存区域的指针（`x0`）和内存区域的大小（以字节为单位，存储在`x1`中）。下面是每条指令的详细解释：</span><br><span class="line"></span><br><span class="line">1. `.globl memzero`：声明`memzero`函数为全局函数，使其可以被其他文件调用。</span><br><span class="line"></span><br><span class="line">2. `memzero:`：函数的开始标签。</span><br><span class="line"></span><br><span class="line">3. `str xzr, [x0], #8`：将零寄存器（`xzr`，始终为零）存储到`x0`指向的内存位置，并将指针`x0`加8个字节。</span><br><span class="line"></span><br><span class="line">4. `subs x1, x1, #8`：将`x1`中的值减去8。</span><br><span class="line"></span><br><span class="line">5. `b.gt memzero`：如果`x1`的值大于零，则跳转回`memzero`标签，继续清零内存。</span><br><span class="line"></span><br><span class="line">6. `ret`：返回，从函数中退出。</span><br><span class="line"></span><br><span class="line">整个过程会循环执行，将指定大小的内存区域（`x1`字节）全部设置为零。</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-设置栈帧并执行kernel-main"><a href="#3-5-设置栈帧并执行kernel-main" class="headerlink" title="3.5 设置栈帧并执行kernel_main"></a>3.5 设置栈帧并执行kernel_main</h3><p>树莓派会在地址0处加载内核，而栈帧会向下增长，为了防止栈使用的内存增长到一定程度时覆盖内核代码，栈帧要设置的足够高。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov		sp, #LOW_MEMORY</span><br><span class="line">bl		kernel_main</span><br></pre></td></tr></table></figure>
+
+<p><strong>疑问1</strong>：这个<code>LOW_MEMORY</code>是多大呢？</p>
+<p>回答：ARM 架构通常使用 4KB 页和 2MB 段，x86 架构可能有不同的配置。我们这里使用页（4KB）和段（2MB）来管理内存，LOW_MEMORY为2 * SECTION_SIZE &#x3D; 4MB。足够保证堆栈的增长不会覆盖内核指令。</p>
+<h2 id="四-ARM-Peripherals"><a href="#四-ARM-Peripherals" class="headerlink" title="四. ARM Peripherals"></a>四. ARM Peripherals</h2><p>到目前为止，理论上，我们已经可以把kernel8.img在树莓派中运行起来了。但是要想要使用串口通信，就必须访问芯片为我们提供的一些外设了！</p>
+<p>所以本节将介绍一下如何配置mini UART串口。</p>
+<h3 id="4-1-访问GPIO"><a href="#4-1-访问GPIO" class="headerlink" title="4.1 访问GPIO"></a>4.1 访问GPIO</h3><p><strong>疑问1</strong>：树莓派3B使用了什么芯片呢？怎么查找相关资料呢？</p>
+<p>回答：树莓派3B使用了博通制造的BCM2837，这里是<a target="_blank" rel="noopener" href="https://github.com/raspberrypi/documentation/files/1888662/BCM2837-ARM-Peripherals.-.Revised.-.V2-1.pdf">《BCM2837 ARM 外围设备手册》下载链接</a></p>
+<p><strong>疑问2</strong>：我们应该怎么访问这些硬件资源呢？</p>
+<p>回答：BCM2837芯片包含多个内存映射设备（memory-mapped devices）。在计算机系统中，内存映射设备是指设备的寄存器通过内存地址进行访问，而不是通过传统的I&#x2F;O端口。这种方式允许CPU通过普通的内存读写指令来访问设备寄存器。</p>
+<p><strong>疑问3</strong>：那么这些外设的基址什么呢？</p>
+<p>回答：BCM2837手册中提到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Physical addresses range from 0x3F000000 to 0x3FFFFFFF for peripherals. The</span><br><span class="line">bus addresses for peripherals are set up to map onto the peripheral bus address range</span><br><span class="line">starting at 0x7E000000. Thus a peripheral advertised here at bus address 0x7Ennnnnn is</span><br><span class="line">available at physical address 0x3Fnnnnnn</span><br></pre></td></tr></table></figure>
+
+<p>结论：我们可以把<code>0x3F000000</code>作为外设的基地址。</p>
+<p><strong>疑问4</strong>：还是有点抽象，能否据一个详细一点的例子？</p>
+<p>回答：我们可以举一个访问GPIO中的<code>GPFSEL1</code>寄存器的例子。</p>
+<p>通过芯片外设手册，我们可以了解到<code>GPFSEL1</code>的bus address为<code>0x7E20 0004</code></p>
+<p><img src="/blog_image/rpi_HelloWorld/02.png" alt="GPFSEL1"></p>
+<p>由于有内存映射的存在，我们可以通过访问<code>0X3F20 0004</code>来访问这个寄存器。</p>
+<p>在疑问3中，我们已经把<code>0x3F000000</code>作为外设的基地址了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> PBASE 0x3F000000</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GPFSEL1         (PBASE+0x00200004)</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可以使用宏定义GPFSEL1来访问这个寄存器了！</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> selector;</span><br><span class="line">selector = get32(GPFSEL1);</span><br></pre></td></tr></table></figure>
+
+<p><strong>疑问5</strong>：我们是不是可以直接访问串口外设了呢？</p>
+<p>回答：并不是，串口通信需要使用第14和第15引脚，所以我们在配置串口之前，得激活这两个引脚。</p>
+<p><img src="/blog_image/rpi_HelloWorld/03.png" alt="GPIO PINS"></p>
+<h3 id="4-2-激活GPIO引脚"><a href="#4-2-激活GPIO引脚" class="headerlink" title="4.2 激活GPIO引脚"></a>4.2 激活GPIO引脚</h3><p>通过BCM2837手册102页，可以看到，一个引脚是可以被很多外设使用的，每个引脚都可以通过配置<code>alternative function</code>来决定当前环境下，这个引脚最终被用来做什么事情。</p>
+<p><img src="/blog_image/rpi_HelloWorld/04.png" alt="alternative function"></p>
+<p>这里可以看到，引脚 14 和 15 具有 TXD1 和 RXD1 替代功能。这意味着，如果我们为 14 号和 15 号引脚选择 5 号替代功能，它们将分别用作 Mini UART 发送数据引脚和 Mini UART 接收数据引脚。</p>
+<p><strong>疑问1</strong>：明白了，我得配置这两个引脚的alternative function，配置为5，可是去哪里配置呢？</p>
+<p>回答：<code>GPFSEL1</code>寄存器用来配置10-19号引脚的alternative function。</p>
+<p><img src="/blog_image/rpi_HelloWorld/05.png" alt="GPFSEL1"></p>
+<p>结论：我们只需要配置这个寄存器的12-17位（分别是14引脚和15引脚），每个引脚有三位可以配置。</p>
+<p><strong>疑问2</strong>：现在总可以去配置串口了吧？</p>
+<p>回答：no no no。GPIO存在pull up&#x2F;down状态，但我们即不需要UP，也不需要down，我们要让他运作在输入模式下。引脚状态之间的切换并不是一个非常简单的过程，因为它需要在电路上实际拨动一个开关。这一过程涉及 GPPUD 和 GPPUDCLK 寄存器，BCM2837 ARM 外围设备手册第 101 页对此进行了描述。我将描述复制到这里：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">The GPIO Pull-up/down Clock Registers control the actuation of internal pull-downs on</span><br><span class="line">the respective GPIO pins. These registers must be used in conjunction with the GPPUD</span><br><span class="line">register to effect GPIO Pull-up/down changes. The following sequence of events is</span><br><span class="line">required:</span><br><span class="line">1. Write to GPPUD to set the required control signal (i.e. Pull-up or Pull-Down or neither</span><br><span class="line">to remove the current Pull-up/down)</span><br><span class="line">2. Wait 150 cycles – this provides the required set-up time for the control signal</span><br><span class="line">3. Write to GPPUDCLK0/1 to clock the control signal into the GPIO pads you wish to</span><br><span class="line">modify – NOTE only the pads which receive a clock will be modified, all others will</span><br><span class="line">retain their previous state.</span><br><span class="line">4. Wait 150 cycles – this provides the required hold time for the control signal</span><br><span class="line">5. Write to GPPUD to remove the control signal</span><br><span class="line">6. Write to GPPUDCLK0/1 to remove the clock</span><br></pre></td></tr></table></figure>
+
+<p>译文：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GPIO上拉/下拉时钟寄存器控制相应GPIO引脚上内部下拉电阻的激活。这些寄存器必须与GPPUD寄存器配合使用，以实现GPIO上拉/下拉的更改。需要遵循以下步骤：</span><br><span class="line"></span><br><span class="line">1. 写入GPPUD寄存器以设置所需的控制信号（即上拉或下拉或两者都不使用以移除当前的上拉/下拉）。</span><br><span class="line">2. 等待150个周期——这提供了控制信号的必要设置时间。</span><br><span class="line">3. 写入GPPUDCLK0/1寄存器以将控制信号时钟进入你希望修改的GPIO引脚——注意，只有接收到时钟的引脚才会被修改，其他所有引脚将保持其之前的状态。</span><br><span class="line">4. 等待150个周期——这提供了控制信号的必要保持时间。</span><br><span class="line">5. 写入GPPUD寄存器以移除控制信号。</span><br><span class="line">6. 写入GPPUDCLK0/1寄存器以移除时钟。</span><br></pre></td></tr></table></figure>
+
+<p><strong>疑问3</strong>：看起来好复杂，能再讲的简单点吗？</p>
+<p>回答：其实就是向GPPUD写入一个状态，再等150周期，再向GPPUDCLK0&#x2F;1写入要配置的引脚，再等150周期，最后再向GPPUD和GPPUDCLK0&#x2F;1写入。总之就是读写寄存器和时延的结合。具体的代码可以去mini_uart.c中看看。</p>
+<h3 id="4-3-配置mini-UART"><a href="#4-3-配置mini-UART" class="headerlink" title="4.3 配置mini UART"></a>4.3 配置mini UART</h3><p>终于，我们可以配置UART了。</p>
+<p>通用异步收发传输器（Universal Asynchronous Receiver&#x2F;Transmitter，通常称为UART）是一种异步收发传输器，是电脑硬件的一部分，将数据通过串列通信进行传输。UART通常用在与其他通信接口（如EIA RS-232）的连接上。</p>
+<p>首先，我们得向<code>AUX_ENABLES</code>寄存器中写入1,用来启动mini UART以及相关的寄存器。<br>接下来通过向<code>AUX_MU_CNTL_REG</code>写入0，来禁用一些我们目前没办法实现的特性。<br>由于还没学到中断，我们向<code>AUX_MU_IER_REG</code>写入0来禁用中断。<br>向<code>AUX_MU_LCR_REG</code>写入3,用来表示我们使用8位模式。<br>向<code>AUX_MU_MCR_REG</code>写入0,RTS 线路用于流量控制，我们不需要它。将其一直设置为高电平。<br>向<code>AUX_MU_BAUD_REG</code>写入270,配置波特率为115200。<br>向<code>AUX_MU_CNTL_REG</code>写入3,开启接受和传输。</p>
+<p>至此，我们就可以在电脑上使用串口软件，来接受和发送消息了！</p>
+<p><strong>疑问</strong>：mini UART只支持115200的波特率吗？</p>
+<p>回答：不是的，波特率有一个计算公式</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">baudrate = system_clock_freq / (8 * ( baudrate_reg + 1 )) </span><br></pre></td></tr></table></figure>
+
+<p>系统时钟频率是250 Mhz，你可以更具想要配置的波特率，算出baudrate_reg后配置到<code>AUX_MU_BAUD_REG</code>寄存器就可以了。</p>
+<h2 id="五-编译并测试"><a href="#五-编译并测试" class="headerlink" title="五. 编译并测试"></a>五. 编译并测试</h2><h3 id="5-1-裸机编译参数"><a href="#5-1-裸机编译参数" class="headerlink" title="5.1 裸机编译参数"></a>5.1 裸机编译参数</h3><p>这里有必要介绍一下编译参数</p>
+<p>我们分析一下这个Makefile中编译参数<code>COPS</code>:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ARMGNU ?= aarch64-linux-gnu</span><br><span class="line"></span><br><span class="line">COPS = -Wall -nostdlib -nostartfiles -ffreestanding -Iinclude -mgeneral-regs-only</span><br><span class="line"></span><br><span class="line">DEP_FILES = $(OBJ_FILES:%.o=%.d)</span><br><span class="line"><span class="keyword">-include</span> <span class="variable">$(DEP_FILES)</span></span><br><span class="line"></span><br><span class="line"><span class="section">kernel8.img: <span class="variable">$(SRC_DIR)</span>/linker.ld <span class="variable">$(OBJ_FILES)</span></span></span><br><span class="line">	<span class="variable">$(ARMGNU)</span>-ld -T <span class="variable">$(SRC_DIR)</span>/linker.ld -o <span class="variable">$(BUILD_DIR)</span>/kernel8.elf  <span class="variable">$(OBJ_FILES)</span></span><br><span class="line">	<span class="variable">$(ARMGNU)</span>-objcopy <span class="variable">$(BUILD_DIR)</span>/kernel8.elf -O binary kernel8.img</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>-Wall<br>  含义: 启用所有常见的警告（Wall是”Warn all”的缩写）。<br>  作用: 这有助于捕捉可能的错误和潜在的问题，提高代码的质量和可靠性。编译器将生成有关代码中潜在问题的警告消息。</p>
+</li>
+<li><p>-nostdlib<br>  含义: 不链接标准库（standard library）。<br>  作用: 在裸机（bare-metal）编程或操作系统开发中，经常需要自己编写启动代码和库函数，因此不会使用标准C库。此选项告诉编译器不要自动链接标准库。</p>
+</li>
+<li><p>-nostartfiles<br>  含义: 不使用标准启动文件（standard startup files）。<br>  作用: 通常情况下，编译器会自动包含一些启动文件，如C库的初始化代码。在操作系统开发或裸机编程中，开发者通常会编写自己的启动代码，所以此选项会禁用默认的启动文件。</p>
+</li>
+<li><p>-ffreestanding<br>  含义: 指示编译器生成独立的代码（freestanding code）。<br>  作用: 通常用于裸机编程环境，告诉编译器目标环境没有标准库的支持。编译器不会假设存在标准库或操作系统，并且不会使用任何库函数。</p>
+</li>
+<li><p>-Iinclude<br>  含义: 指定头文件搜索路径（include path）。<br>  作用: include 目录是头文件所在的目录。此选项告诉编译器在该目录中查找头文件。对于例如 #include “myheader.h” 的头文件包含指令，编译器将首先在 include 目录中查找。</p>
+</li>
+<li><p>-mgeneral-regs-only<br>  含义: 限制编译器只使用通用寄存器（general-purpose registers）。<br>  作用: 这个选项通常用于嵌入式编程，尤其是ARM架构，以确保编译器只使用通用寄存器，避免使用特殊寄存器或浮点寄存器，这可能在某些裸机环境中不可用。</p>
+</li>
+</ul>
+<p><strong>使用场景</strong></p>
+<p>这些编译参数常用于操作系统开发、裸机编程或其他低级别编程场景。在这些场景中，开发者通常需要完全控制生成的代码，并且不能依赖标准库或默认的启动文件。通过这些参数，开发者可以确保编译器生成的代码是完全自主的，可以在没有操作系统支持的情况下运行。</p>
+<h3 id="5-2-测试结果"><a href="#5-2-测试结果" class="headerlink" title="5.2 测试结果"></a>5.2 测试结果</h3><p><img src="/blog_image/rpi_HelloWorld/06.jpg" alt="reault"></p>
+<h2 id="六-扩展练习"><a href="#六-扩展练习" class="headerlink" title="六. 扩展练习"></a>六. 扩展练习</h2><h3 id="6-1-配置波特率"><a href="#6-1-配置波特率" class="headerlink" title="6.1 配置波特率"></a>6.1 配置波特率</h3><p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/1/zrf">https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/1/zrf</a></p>
+<p>mini UART波特率计算公式如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">baudrate = system_clock_freq / (8 * ( baudrate_reg + 1 )) </span><br></pre></td></tr></table></figure>
+
+<p>时钟频率为250Mhz，我们可以依据想要配置的波特率，计算baudrate_reg，并写入<code>AUX_MU_BAUD_REG</code>寄存器即可。</p>
+<h3 id="6-2-UART"><a href="#6-2-UART" class="headerlink" title="6.2 UART"></a>6.2 UART</h3><p>这得好好看看芯片手册吧，这个练习不太感兴趣，以后有空再说吧。</p>
+<h3 id="6-3-CPU"><a href="#6-3-CPU" class="headerlink" title="6.3 CPU"></a>6.3 CPU</h3><p>参考链接<br><a target="_blank" rel="noopener" href="https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/3/zrf">https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/3/zrf</a></p>
+<p>尝试使用全部 4 个处理器内核。操作系统应为所有内核打印 “Hello, from processor &lt;processor index&gt;!”。不要忘记为每个内核设置单独的堆栈，并确保 Mini UART 只初始化一次。您可以结合使用全局变量和延迟函数来实现同步。</p>
+<p>在为每个CPU配置栈帧的时候，我有些疑惑，或许学了后面的内存管理相关的章节就会明白了。</p>
+<p>参考了一下其他答案，我们的内存可能看起来是这个样子</p>
+<p>已知条件：<br>LOW_MEMORY &#x3D; 4MB<br>SECTION_SIZE &#x3D; 2MB</p>
+<p>对于每个CPU，栈指针的计算公式如下：<br>sp&#x3D;SECTION_SIZE×CPU_ID+LOW_MEMORYsp&#x3D;SECTION_SIZE×CPU_ID+LOW_MEMORY</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">地址       | 使用情况</span><br><span class="line">-----------|--------------------------------------</span><br><span class="line">10MB       |-------------------------------------| &lt;-- CPU 3 栈顶 (sp 初始值)</span><br><span class="line">           |                 Stack 3             |</span><br><span class="line">           |                 ...                 |</span><br><span class="line">           |                 ...                 |</span><br><span class="line">8MB        |-------------------------------------| &lt;-- CPU 2 栈顶 (sp 初始值)</span><br><span class="line">           |                 Stack 2             |</span><br><span class="line">           |                 ...                 |</span><br><span class="line">           |                 ...                 |</span><br><span class="line">6MB        |-------------------------------------| &lt;-- CPU 1 栈顶 (sp 初始值)</span><br><span class="line">           |                 Stack 1             |</span><br><span class="line">           |                 ...                 |</span><br><span class="line">           |                 ...                 |</span><br><span class="line">4MB        |-------------------------------------| &lt;-- CPU 0 栈顶 (sp 初始值)</span><br><span class="line">           |                 Stack 0             |</span><br><span class="line">           |                 ...                 |</span><br><span class="line">           |                 ...                 |</span><br><span class="line">3MB        |-------------------------------------|</span><br><span class="line">           |               .bss 段                |</span><br><span class="line">2MB        |-------------------------------------|</span><br><span class="line">           |               .text 段               |</span><br><span class="line">           |-------------------------------------|</span><br><span class="line">           |             .text.boot 段            |</span><br><span class="line">0MB        |-------------------------------------| &lt;-- Kernel 起始地址</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这里我们使用delay函数来等待CPU0把UART作初始化后，再去向串口进行输出。</p>
+<p>看看最终的效果吧！</p>
+<p><img src="/blog_image/rpi_HelloWorld/07.jpg" alt="reault"></p>
+<h3 id="6-4-qemu"><a href="#6-4-qemu" class="headerlink" title="6.4 qemu"></a>6.4 qemu</h3><p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/4/zrf">https://github.com/zzzzrf/raspberry-pi-os/tree/master/exercises/lesson01/4/zrf</a></p>
+<p>qemu命令行为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zrf@debian:zrf$ qemu-system-aarch64 -M raspi3b -cpu cortex-a53 -kernel kernel8.img -nographic -serial null -serial stdio -monitor none</span><br><span class="line">Hello, world!</span><br></pre></td></tr></table></figure>
+
+<p>参数解释：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-aarch64:</span><br><span class="line"></span><br><span class="line">    启动QEMU模拟器，目标架构是AArch64（ARM64）。</span><br><span class="line"></span><br><span class="line">-M raspi3b:</span><br><span class="line"></span><br><span class="line">    指定要模拟的机器类型为 Raspberry Pi 3B。</span><br><span class="line"></span><br><span class="line">-cpu cortex-a53:</span><br><span class="line"></span><br><span class="line">    指定虚拟机使用 Cortex-A53 CPU。</span><br><span class="line"></span><br><span class="line">-kernel kernel8.img:</span><br><span class="line"></span><br><span class="line">    指定要启动的内核映像文件为 kernel8.img。</span><br><span class="line"></span><br><span class="line">-nographic:</span><br><span class="line"></span><br><span class="line">    禁用图形输出，将所有I/O重定向到当前的shell。这意味着你不会看到QEMU的图形窗口，而是直接在终端中与模拟器交互。</span><br><span class="line"></span><br><span class="line">-serial null:</span><br><span class="line"></span><br><span class="line">    将第一个串口（UART0）输出重定向到null，即丢弃所有输出。这是为了避免第一个串口的输出干扰其他输出。</span><br><span class="line"></span><br><span class="line">-serial stdio:</span><br><span class="line"></span><br><span class="line">    将第二个串口（UART1）输入输出重定向到标准输入输出（当前的shell）。这意味着你可以在当前的shell中看到串口输出，并且可以通过键盘输入与其交互。</span><br><span class="line"></span><br><span class="line">-monitor none:</span><br><span class="line"></span><br><span class="line">    禁用QEMU监视器。QEMU监视器是一个命令行界面，用于控制QEMU虚拟机的各种操作。禁用它可以防止与标准输入输出的冲突。</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zzzzrf.github.io">zrf</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zzzzrf.github.io/2024/07/06/rpi_HelloWorld/">https://zzzzrf.github.io/2024/07/06/rpi_HelloWorld/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zzzzrf.github.io" target="_blank">zrf's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Raspberry-Pi/">Raspberry Pi</a><a class="post-meta__tags" href="/tags/UART/">UART</a></div><div class="post-share"><div class="social-share" data-image="/blog_image/rpi_HelloWorld/hello_world.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>感谢支持</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat_pay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat_pay.jpg"/></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/06/21/20240621/" title="好运设计"><img class="cover" src="/blog_image/20240621/1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">好运设计</div></div><div class="info-2"><div class="info-item-1">梦想使你迷醉，距离就成了欢乐；追求使你充实，失败和成功都是伴奏；当生命以美的形式证明其价值的时候，幸福是享受，痛苦也是享受</div></div></div></a><a class="pagination-related" href="/2025/02/15/20250215/" title="悉达多"><img class="cover" src="/blog_image/20250215/CMCoOScDbDY0AAV3-wBgpff5.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">悉达多</div></div><div class="info-2"><div class="info-item-1">我听遍灵魂与肉体的安排，去经历罪孽，追逐肉欲和财富，去贪慕虚荣，以陷入最可耻的绝望，以学会放弃挣扎，学会热爱世界。我不再将这个世界与我所期待的，塑造的圆满世界比照，而是接受这个世界，爱他，属于它。</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">zrf</div><div class="author-info-description">求知若渴，虚心若愚</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zzzzrf"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zzzzrf" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:853241825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">蹒跚学步,感谢支持!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一. 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">1. 项目介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%9B%AE%E7%9A%84"><span class="toc-number">1.2.</span> <span class="toc-text">2. 目的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">2.</span> <span class="toc-text">二. 参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-kernel8-img"><span class="toc-number">3.</span> <span class="toc-text">三. kernel8.img</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%88%B6%E4%BD%9C%E5%86%85%E6%A0%B8%E9%95%9C%E5%83%8F"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 制作内核镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-elf%E4%B8%AD%E7%9A%84%E6%AE%B5%E5%B8%83%E5%B1%80"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 elf中的段布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%80%89%E6%8B%A9CPU0"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 选择CPU0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%B8%85%E7%A9%BA-bss%E6%AE%B5"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 清空.bss段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E8%AE%BE%E7%BD%AE%E6%A0%88%E5%B8%A7%E5%B9%B6%E6%89%A7%E8%A1%8Ckernel-main"><span class="toc-number">3.5.</span> <span class="toc-text">3.5 设置栈帧并执行kernel_main</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-ARM-Peripherals"><span class="toc-number">4.</span> <span class="toc-text">四. ARM Peripherals</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E8%AE%BF%E9%97%AEGPIO"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 访问GPIO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%BF%80%E6%B4%BBGPIO%E5%BC%95%E8%84%9A"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 激活GPIO引脚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E9%85%8D%E7%BD%AEmini-UART"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 配置mini UART</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-%E7%BC%96%E8%AF%91%E5%B9%B6%E6%B5%8B%E8%AF%95"><span class="toc-number">5.</span> <span class="toc-text">五. 编译并测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%A3%B8%E6%9C%BA%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 裸机编译参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 测试结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD-%E6%89%A9%E5%B1%95%E7%BB%83%E4%B9%A0"><span class="toc-number">6.</span> <span class="toc-text">六. 扩展练习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E9%85%8D%E7%BD%AE%E6%B3%A2%E7%89%B9%E7%8E%87"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 配置波特率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-UART"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 UART</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-CPU"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 CPU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-qemu"><span class="toc-number">6.4.</span> <span class="toc-text">6.4 qemu</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/20250215/" title="悉达多"><img src="/blog_image/20250215/CMCoOScDbDY0AAV3-wBgpff5.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="悉达多"/></a><div class="content"><a class="title" href="/2025/02/15/20250215/" title="悉达多">悉达多</a><time datetime="2025-02-15T11:17:26.000Z" title="发表于 2025-02-15 19:17:26">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/06/rpi_HelloWorld/" title="裸机程序hello world"><img src="/blog_image/rpi_HelloWorld/hello_world.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="裸机程序hello world"/></a><div class="content"><a class="title" href="/2024/07/06/rpi_HelloWorld/" title="裸机程序hello world">裸机程序hello world</a><time datetime="2024-07-06T15:42:18.000Z" title="发表于 2024-07-06 23:42:18">2024-07-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/21/20240621/" title="好运设计"><img src="/blog_image/20240621/1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="好运设计"/></a><div class="content"><a class="title" href="/2024/06/21/20240621/" title="好运设计">好运设计</a><time datetime="2024-06-21T15:37:14.000Z" title="发表于 2024-06-21 23:37:14">2024-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/16/vxlan_rfc7348/" title="VXLAN RFC7348"><img src="/blog_image/rfc7348/00.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VXLAN RFC7348"/></a><div class="content"><a class="title" href="/2024/06/16/vxlan_rfc7348/" title="VXLAN RFC7348">VXLAN RFC7348</a><time datetime="2024-06-16T10:32:24.000Z" title="发表于 2024-06-16 18:32:24">2024-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/08/MakefileTutorial/" title="Makefile Tutorial"><img src="/blog_image/Makefile/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Makefile Tutorial"/></a><div class="content"><a class="title" href="/2024/06/08/MakefileTutorial/" title="Makefile Tutorial">Makefile Tutorial</a><time datetime="2024-06-08T07:19:25.000Z" title="发表于 2024-06-08 15:19:25">2024-06-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/05/26/trace_esp/" title="Trace ESP Packet"><img src="/blog_image/XFRM-state/ipsec.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Trace ESP Packet"/></a><div class="content"><a class="title" href="/2024/05/26/trace_esp/" title="Trace ESP Packet">Trace ESP Packet</a><time datetime="2024-05-26T14:30:13.000Z" title="发表于 2024-05-26 22:30:13">2024-05-26</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/back.jpeg);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By zrf</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to zrf's <a href="https://zzzzrf.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = "留下你的足迹o(*￣▽￣*)ブ"
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'mHV5QZzhNBabMj6y5kw2SYqq-gzGzoHsz',
+      appKey: '2fvaL99PG3kQNK15rc70qhMV',
+      avatar: 'monsterid',
+      serverURLs: 'https://mhv5qzzh.lc-cn-n1-shared.com',
+      emojiMaps: "",
+      visitor: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Valine' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
