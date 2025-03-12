@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>务虚笔记 | zrf's blog</title><meta name="author" content="zrf,853241825@qq.com"><meta name="copyright" content="zrf"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="每一个人或者每一种情绪都在那一刻埋下命定的方向，以后，永远，每当从这个世界上独自回家，都难免是朝着那个方向。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="务虚笔记">
+<meta property="og:url" content="https://zzzzrf.github.io/2025/03/09/20250222/index.html">
+<meta property="og:site_name" content="zrf&#39;s blog">
+<meta property="og:description" content="每一个人或者每一种情绪都在那一刻埋下命定的方向，以后，永远，每当从这个世界上独自回家，都难免是朝着那个方向。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zzzzrf.github.io/blog_image/20250222/7b4a8bee660a1d4165f0206cb8990c3.jpg">
+<meta property="article:published_time" content="2025-03-09T02:15:21.000Z">
+<meta property="article:modified_time" content="2025-03-12T01:57:41.913Z">
+<meta property="article:author" content="zrf">
+<meta property="article:tag" content="史铁生">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zzzzrf.github.io/blog_image/20250222/7b4a8bee660a1d4165f0206cb8990c3.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "务虚笔记",
+  "url": "https://zzzzrf.github.io/2025/03/09/20250222/",
+  "image": "https://zzzzrf.github.io/blog_image/20250222/7b4a8bee660a1d4165f0206cb8990c3.jpg",
+  "datePublished": "2025-03-09T02:15:21.000Z",
+  "dateModified": "2025-03-12T01:57:41.913Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "zrf",
+      "url": "https://zzzzrf.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://zzzzrf.github.io/2025/03/09/20250222/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: zrf","link":"链接: ","source":"来源: zrf's blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '务虚笔记',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(/img/back.jpeg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/blog_image/20250222/7b4a8bee660a1d4165f0206cb8990c3.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">zrf's blog</span></a><a class="nav-page-title" href="/"><span class="site-name">务虚笔记</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">务虚笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-09T02:15:21.000Z" title="发表于 2025-03-09 10:15:21">2025-03-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-12T01:57:41.913Z" title="更新于 2025-03-12 09:57:41">2025-03-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E4%B9%A6%E6%91%98/">书摘</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">9.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>26分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-03-12 09:57:41&quot;}" hidden></div><h2 id="书摘"><a href="#书摘" class="headerlink" title="书摘"></a>书摘</h2><h3 id="写作之夜"><a href="#写作之夜" class="headerlink" title="写作之夜"></a>写作之夜</h3><p>忘记和不曾察觉的事等于从未发生。</p>
+<p>一切被意识到的生活都是被意识改造过的，他们只是作为意义的载体才是真实的，而意义乃是现在的赋予。那么未来呢？未来是真实的吗？噢是的，未来的真实在于它是未来，在于它的不曾到来。在于它仅仅是一片梦想。过去在走向未来，意义追逐着梦想，在意义与梦想之间，在它们的重叠之处就是现在。</p>
+<p>往事，和故人，也是这样，无论它们飘转进明亮还是逃遁进黑暗，它们都只能在我的印象里成为真实。</p>
+<p>我是我的印象的一部分；而我的全部印象才是我。</p>
+<h3 id="残疾与爱情"><a href="#残疾与爱情" class="headerlink" title="残疾与爱情"></a>残疾与爱情</h3><p>是的，这样的情景太阳从没有见过，夕阳从没有见过，甚至月亮也没有见过。但是C见过：在他的梦里，在他们长久分别的年月，在他去寻找X的梦中。但他没说。</p>
+<p>你正要走进爱情但是你先一步走进了残疾。</p>
+<p>回避不仅仅是回避，而是否决。那是未经审理的判决。若再把那同情和摇头转换为对坚强与乐观、无私与奉献的千倍万倍的赞许，便是一个人渴望爱而又不敢爱、指望死却又不能去死的可靠处境了…</p>
+<h3 id="死亡序幕"><a href="#死亡序幕" class="headerlink" title="死亡序幕"></a>死亡序幕</h3><p>画家Z那困惑之深，倘不走向疯狂，就势必走向与日俱增的茫然。</p>
+<p>死，怎么可以把一个人那么多那么多不容轻蔑的痛苦、愿望、期盼，也许还有幸福，就那么迅速、简单、轻而易举地统统化为零了呢？</p>
+<p>一天一度的黎明，仿佛是从肠胃里卷起的一阵阵咕噜噜的欲望。在隐隐绰绰的楼群后面，从这浩瀚都市的腹地那儿，一幅巨大的肠胃或是一架巨大的发动机开始呻吟、轰鸣、喧嚣，那声音沿着所有刚性物体的表面流传、聚积、碰撞、冲天而起再四散飞扬…但如果你走进去，走进网膜一样粘稠的街道中去，你找不到，无论是那幅辘辘饥肠还是那架永动的机器，你都找不到；你以一个微弱的“咕噜噜”参加进入而已。</p>
+<p>任何形式都是要说话的，都是一种公开的或悄悄的告白，一种形式不是表达一种真意，就是变卖一种真意。比如性，那赤裸的相见，不是赤裸地表达爱的真诚、坦荡，就是赤裸地宣布对爱的轻蔑和抹杀。</p>
+<h3 id="童年之门"><a href="#童年之门" class="headerlink" title="童年之门"></a>童年之门</h3><p>我有点自惭形秽，我想回家。</p>
+<p>如果你站在四岁的O的位置瞻望未来，你会说她前途未卜，你会说她前途无限，要是你站在她的终点看这个生命的轨迹，你看到的只是一条路，你就只能看见一条命定之途。</p>
+<h3 id="恋人"><a href="#恋人" class="headerlink" title="恋人"></a>恋人</h3><p>因为我相信不管什么时候，我们都可能丢失和我们真正要寻找的都是——爱情！</p>
+<p>每当他锯开颅骨看见沟回盘绕的大脑，感到这些白嫩嫩的物质的温度和运动，他总要怀着惊愕和尊敬在心里暗暗地问：这里面已经埋藏了多少幸福和痛苦？</p>
+<p>如果爱是真的爱就不可能错，如果那爱是假的那根本就不是爱…</p>
+<p>N说，要是我不知道我错在了哪儿，要是我们并没有错，我们为什么要放弃，我们凭什么要分离…</p>
+<p>“你的骨头，没有一点男人！”</p>
+<p>空冥的猜想可以负载任意的梦景，而实在的答案便会限定出真确的痛苦。</p>
+<p>美丽的位置？<br>对了，那必不能是一个从赤城相见退回到彬彬有礼的位置。<br>美丽的位置？<br>对了，那必不能是一个心血枯焦却被轻描淡写的位置。</p>
+<p>N对此淡然一笑，相信自己今生今世不可能再有什么爱情了，结婚嘛仅仅就是结婚，不过是因为并不打算永远不结婚了。</p>
+<p>“悲剧，都是好人与好人之间的事”</p>
+<h3 id="生日"><a href="#生日" class="headerlink" title="生日"></a>生日</h3><p>我没统计过我与多少个世界发生过关系，我本想借此关系去看看另外的、非我的世界，结果他们只是给了我一些材料，供我构筑了这个对我来说的世界。正如我曾走过山，走过水，其实只是借助他们走过我的生命；我看着天，看着地，其实只是借助它们确定着我的位置；我爱着她，爱着你，其实只是借助别人实现了我的爱欲。</p>
+<p>在学校门前跟奶奶分手时我感觉像是被抛进了另一个世界，我知道我必须离开奶奶到那个世界里去，心中无比凄惶。</p>
+<p>我抱着那只千疮百孔的足球，抱着一个少年阴云密布的心，并且不得不重新抱起这个世界的危险，在一个秋天的晚上，延一条掌起了灯的小街，回家。</p>
+<p>每一个人或者每一种情绪都在那一刻埋下命定的方向，以后，永远，每当从这个世界上独自回家，都难免是朝着那个方向。</p>
+<p>在爱的梦想涌现，同时发现人与人之间的信任是如此脆弱的那个热烈而孤单的夏天里，诗人出生。</p>
+<p>那群快乐的孩子，注定要在某一时刻某一地点发现他们羞耻的出身，无可选择地接受这个位置，以此为一个全新的起点，在未来长久的年月里，以麻木要么以谋略去赎清他们的“罪孽”。</p>
+<h3 id="母亲"><a href="#母亲" class="headerlink" title="母亲"></a>母亲</h3><p>譬如那个少年WR，他听见了那个可怕的消息但如果他并不声张，他看见了那个故事的荒谬但如果他知其利害因而对谁也不说，如果少年的警惕压倒了少年的率真，他把这荒谬悄悄地但是深深地藏进心底，那么他就不是少年WR他就是少年Z了——在我眼前，WR的形象便迅速消散，在其消散之处即刻代之以少年Z。反之，要是少年Z还未及懂得警惕的必要性，少年的率真使他道破了那个故事的荒谬，那样的话少年Z便要消散，在同一个位置上少年WR又回来。</p>
+<p>我不知道他们是否曾跟我一样，有过那么一会儿，由衷地希望他们的出身是搞错了，现在的父母并不是他们的父母，他们并没有过现在这样的父母，而是…而是什么呢？但我知道他们至少跟我一样曾经希望过，有另外一种家，比如一对光荣的父母，一个“红色”的至少不是“黑色”的家。无论是我，是少年Z还是少年WR，都从那一瞬间的欲念中看见了自己的可悲。</p>
+<p>那个深冬的夜晚，或者仲夏之夜，儿子感到，母亲的疲惫和憔悴乃是自己的罪孽。</p>
+<p>“但是这一对夫妻的这一回拌嘴，却要等上四十个年头把他们最美好的年华都等过去之后才能有言归于好的机会。”</p>
+<p>由于她们，我又去看我窗外的那一群鸽子。一代又一代，一群又一群，那不过是鸽子的继续，是鸽类继续的方法、途径、形式。就像昼与夜，是时间的继续。就像昨天的你和今天的你，还有明天的你，那都是你的继续是同一个人的继续。人山人海也是一样，其中的每一个人，一百年后最多两百年后就都没有了，但仍有一个人山人海在那儿继续，一如既往地喧嚣踊跃梦想纷纭，这之间的衔接就如同昨天的你和今天的你，看不出丝毫断裂和停顿。</p>
+<p>所有可敬可爱的女人，她们应该来自南方又回到南方去，她们由那块魅人的水土生成又化入那块水土的神秘，使北方的男人皓首穷经翘望终生。</p>
+<p>爷爷说自古及今，兵伐政治，鹿鼎频争，无非是打天下坐天下，超朝代代，谁不说着天下为公，可天下几时为公过呢？英雄豪杰，伟略雄韬，争为天下君罢了。为天下君何如“为天下谷”？“为天下谷，常德乃足，复归于朴”。</p>
+<p>诗人L不愿看到甚至不愿去想，一个美好的女人放弃梦想时的惨状。诗人现在甚至希望：<br>她魂牵梦萦的那个男人确实已经死了，在她放弃她的梦想之前，这个消息已经得到了证实。或者诗人希望：<br>在她放弃她的梦想之前，她的梦想已经自行破灭，有确凿无疑的证据表明，那个远在天边的男人能够回来但他不打算回来。或者，诗人希望：<br>他的梦想不是被理性放弃的，至少不是被一种现实的利益所放弃的，我宁愿那是被另一个梦想顶替掉的，那样的话，梦想就仍然能够继续。诗人想：我宁愿忍受她已经另有所爱，也不愿意设想这个世界上没有一个人能幸免于从梦想堕落进现实。<br>（她是为了儿子的前程）</p>
+<h3 id="人群"><a href="#人群" class="headerlink" title="人群"></a>人群</h3><p>少年WR和我们一样，和六十年代的所有中国少年一样，提起海外便由衷地恐怖、憎恶、毛骨悚然甚至夜里都做噩梦：深不见底的昏天暗地，泥泞中劳工的哀歌，老人衣不蔽体，妇孺奄奄待毙…一道暗蓝色幽光，风吹草动，暗藏杀机…一团白花花的警笛沿街流窜，一路凄号…珠光宝气，阔腹肥臀，浓装艳抹的女人，婊子，或是走投无路沦落风尘的不幸少女…镣铐、皮鞭和啜泣，叠印了暗红的如同锈迹斑斑的其实是血腥的一缕狞笑…那就是海外，我童年印象中的海外。</p>
+<p>他心中那根柔软飘蓬的羽毛本来也许会随着光阴的进展而消解，但现在又被猛烈地触动了，再度于寂静之中喧嚣动荡起来。小市民与野孩子。少年Z敏感而强悍的心，顷刻间从那座美丽得出人意料的房子，从那条冬天夜晚回家的小街，一直串连起画家Z对未来不甘人下的憧憬。</p>
+<p>待骄阳如火灿烂灼人之时，我已经站在密不透风的人群中。人山人海，人山人海但是每一个人都无处可藏，都必须表明对那幅对联从而表明对革命的态度，表明自己是英雄儿女制造出来的好汉抑或是很多次反动事件所遗留的一个个混蛋。在我的视野里，曾经没有一个人能够反对那副对联。F医生，女导演N，女教师O，未来的残疾人C，我和诗人L，都竭力表现自己对革命的忠诚，无论是以“好汉”的光荣或惶恐，还是以“混蛋”的勇敢或恐惧，都在振臂高呼，随波逐流。</p>
+<h3 id="夏天的墙"><a href="#夏天的墙" class="headerlink" title="夏天的墙"></a>夏天的墙</h3><p>他用煤，在那座桥墩上描绘一个小姑娘的头发时起，我听见他的消息。他坦白的心愿遭到嘲笑，草丛中童真无忌的话语成为别人威胁他的把柄，那时，我感觉他已存在。沿着长长的河堤回家，看见偌大的夕阳中注满了温存和忧恐，我想就是从那一刻，诗人的消息已不能埋没。</p>
+<p>怅然若失，是少年皈依真理的时刻。</p>
+<p>那个晚上我回到家，觉得轻松了很多。平安。平安的感觉。仿佛一个噩梦终于消散。安谧的夏夜，灯光也比往日柔和。安全感。夜里，躺在床上，满天的星星在窗外老海棠树的枝叶间闪烁，但是我不使自己想下去，我想明天，明天我不用再那么害怕了，我与地主没关系了，我可以请同学到我家来了，学校里将不会有人知道我是奶奶带大的了。<br>但是你知道吗？很多年前的那个晚上我就已经知道，那才是我的罪孽，那是真正的罪孽，不要说WR的勇敢，即使是画家Z的愤恨也比这要干净的多。<br>但是你仍然感到轻松了。<br>是的。感到安全。<br>虽然丑恶依然是丑恶，但是别人并不知道，是吗？<br>正是这样。<br>于是安全了，是吗？为了安全，我们得小心掩盖我们的羞耻。<br>否则怎么办呢？<br>诗人看着我，很久很久沉默不语。</p>
+<p>诗人说：“我知道人的丑陋和罪孽，因而我知道人会有羞耻之心。但是我不懂，为什么亚当夏娃首先要遮蔽那个地方？羞耻为什么以此为最？”。</p>
+<p>我曾多次坐在火车上，与一个个偶然相遇的旅伴东拉西扯胡言乱语（和熟人可不敢这样），觉得安全，不怕有人出卖你，不怕有人看不起你，因为陌生是一种保障，车到终点大家就各奔东西互不存在了。熟人有一种危险，陌生倒可以安全，这确实有点滑稽。</p>
+<p>L，他到底爱谁呢？爱哪一个？<br>这是爱情吗？哪一个是？<br>什么是爱情？<br>真的只是花期吗？雄蕊和雌蕊的交合？<br>借助风、蜜蜂和蝴蝶？<br>千古之问。</p>
+<p>诗人挥汗如雨，浩荡诗情一发而不可收。整整那个夏天，L都在给T写信；或者是说这个季节，夏天这种季节，注定就是向梦幻般那个少女表达爱恋的时候。永恒的夏天，永不倦怠的爱情，在我的印象里年年如此，年年的热恋永不消逝。</p>
+<h3 id="白色鸟"><a href="#白色鸟" class="headerlink" title="白色鸟"></a>白色鸟</h3><p>那个诚实的L，他把心里的一切都写在了纸上。把他的向往、他的心愿、他的幻想、火车之夜、忏悔和忏悔也不能断绝的诱惑、美丽的和丑陋的、一切燃烧的欲望一切昼思夜梦，都原原本本写在他的日记本上，白纸黑字。诗人相信，爱，需要全部的真诚，不能有丝毫隐瞒，他不懂得白纸黑字的危险，他还不懂得诗的危险。<br>我没有寄，我甚至没有写，那些和L一样的欲望我只让他藏在心里。我知道真情在这个世界上有多么危险。爱和诗的危险。当我的身心开始发育，当少女的美丽使我兴奋，使我痴迷，使我暗自魂驰魄荡之时，我已懂得了异性之爱的危险，懂得了隐藏这真切欲望的必要。</p>
+<p>我生来是一个胆怯的男孩儿，外表胆怯，但心里欲念横生。</p>
+<p>再说，要那个男孩子改掉什么呢？改掉性欲还是改掉爱欲？如果他不得不改掉什么的话，那么他改掉的不可能是别的，他改掉的必定是诚实，是坦率，是对别人的信任，学会隐瞒，把自己掩盖起来，学会的是对所有人的防范。</p>
+<p>最让人感到耻辱的为什么是性而不是别的？<br>喂，喂喂，我想是这样，因为那样的时候人最软弱，那是人表达自己软弱的时候。<br>表达自己的软弱，即是表达对他人的需要。爱，就是对他人的依赖，对自由和平安的依赖，对依赖的依赖。所以…所以…<br>所以什么？<br>所以那是危险的…<br>危险的？<br>你不知道他人会不会响应。是响应还是蔑视，你没有把握。</p>
+<p>我想不起他们是怎样找到这样的形式的，在那间书架林立的屋子里，他们是怎样终于移动成那样的位置的。那必是一段漫长的时间，漫长如诗人L的夏夜，甚至地球的温度也发生了变化，天体的结构也有了改变，他们才走到了现在的位置。<br>但发生，我记得只是一瞬间，不期而至两只手偶然相碰，却不离开，那一瞬间之后才想起是经过了漫长的期待。</p>
+<p>南方不是一种空间，甚至不是时间。南方，是一种情感。是一个女人，是所有离去、归来和等待着的女人。她们知道北方的翘望，和团聚的路途有多么遥远。与生俱来的图景但是远隔千山万水，一旦团聚，便是南方了。</p>
+<h3 id="白杨树"><a href="#白杨树" class="headerlink" title="白杨树"></a>白杨树</h3><p>如果N出现的太晚，F的疯狂就要耗散，在日复一日夜复一夜的等待中他那软弱求全苟且偷安的禀性就又要占了上风，堤坝一旦不能冲决便要等到二十多年以后了，所有那些炽烈奔涌的话语都将倒灌回心中，只在夜梦里发出些许残断的回响，F就仍是今日之F。</p>
+<p>宽慰不排除爱也不排除恨甚至不排除“纵使相逢应不识”，而只排除平庸，只排除不失礼数地把你标明在一个客人的位置上，把你推开在一个得当的距离之外——对了：朋友。这位置，这距离，是一条魔谷，是一道鬼墙，是一个丑恶凶残食人魂魄的老妖，它能点金成石、化血为水，把你舍命的珍藏“刷拉”一下翻转成一场漫不经心的玩笑。</p>
+<p>他抑或我——我们将默默地凝望，隔着咫尺的空间，隔着浩瀚的时间，凝望生命的哀艳与无常，体味历史的丰饶与短暂。他抑或我，不动声色却黯然神伤。他说你看见了吗？我说我看得见：亲近，刹那间只是刹那间已呈疏远。他抑或我，强作镇定但四肢冰凉，他说你听见了没有？我说我能听见：殷殷心血依旧流淌得汩汩有声我说我能听见，悠悠心魂又被啃咬得簌簌做响我说是啊是啊我能听见。</p>
+<p>如果我已经回来，如果你已经不在，但我的意识超越光速我以心灵的目光追踪你飘离的影像，这就是：眺望。<br>如果现实已成过去，如果过去永远现实，一个伤痕累累的欲念在没有地点的时间中或在抹杀了时间的地点上，如果追上了一个飘离的影像那就是：梦。</p>
+<p>在青年F的心目中N是一切圣神和纯洁的化身，是他每时每刻的良心，是清晨醒来时的希望和夜晚安眠前的祷告，甚至干脆是他的信念本身。</p>
+<p>他此生第一次看见她，就是这样伏在阳台栏杆上看见的。但也许不是，也许那时他还没长大，还没长高到可以伏在阳台的栏杆上，还没有发觉她对他的必要，有可能他是从阳台栏杆的空隙间第一次看见她的，还没有感觉到一种命运的来临。</p>
+<p>真诚的一切里面都没有它（这里的它是指女导演N的提问“我淫荡吗？”），背弃真诚的一切理由里面都是它，它不是“不要任性”它可能常常倒是“要想想自己的前程”。</p>
+<p>在他终于为了两颗衰老的心脏而背离了自己的真心之时，在他终于为了两份残年的满足而使N痛不欲生之时，在他终于屈服在威胁和哀求之下离N而去之时，一头乌发忽如雪染的那个夜晚，他感觉到那两个字无处不在，周围旋卷缠绕着的风中淫淫荡荡正是那两个字的声色。</p>
+<h3 id="欲望"><a href="#欲望" class="headerlink" title="欲望"></a>欲望</h3><p>我只是希望你能相信我，相信我既是一个真诚的恋人，又是一个好色之徒。</p>
+<p>诗人说：而这一切希望，现在我知道，全是为了有一天我能把我的一切心意原原本本地告诉她们，让她们看见我的美好也看见我的丑恶，看见我的纯洁、我的污秽、我的高尚和我的庸俗，看见我的欲望多么纷纭可我的希望多么纯洁。一切希望，我现在知道，就在于她们看清了我的真相而依然不厌弃我，一切欢乐都不改变。否则我总担心那欢乐会疏忽消逝。</p>
+<p>诗人知道，随即她想说的必然还有：“那为什么你说，你只爱我呢？”必然还会有：“如果那不是因为我，而是因为我是女人，为什么那不直接叫做情欲，而要叫做爱情？”然后还有：“那么你是不是只对我有这样的情欲呢？如果只对我才这样，要是没有我呢？”还有：“要是我们没有那个偶然的机会相遇，你的情欲怎么办呢？是不是总归得有一个实现情欲的机会？”还会有：“那时，你会不会对另一个女人也说‘这是爱情’，说这是唯一的，说‘我只爱你一个’呢？”</p>
+<p>所有的海誓山盟都仅具现在性，并不能保障未来。与其认为这是海誓山盟的悲哀，不如看清这是海誓山盟的起源。对于别人的情绪，我们无从把握，我们害怕在别人变化了的情绪里受到伤害，所以我们乞灵于海誓山盟。海誓山盟是掩耳盗铃式的恐惧。海誓山盟证明孤独的绝对。这并不怪谁，这是我们的处境。就像同年那个秋天的夜晚我抱着一只破足球回家的时候。因此我们一天天学会防备，学会把握自己。要袒露还是要隐藏，自己可要慎重。</p>
+<p>看见他们就想起你，看见你就忘记了他们。</p>
+<p>离开，那过程必定很复杂，但结果总是很简单。</p>
+<p>（诗人想：如果爱情是一种美好的感情，又为什么只应该一对一呢？）<br>诗人躺在黑夜里，我想：那必是由被抛弃者的痛苦奠基起来的赞美，是由于人人都可能成为被抛弃者才广泛建立起来的主张。我想：那是害怕被他人抛弃，而对他人预先的恭维和安抚，威吓和警告。<br>诗人躺在黑夜里，我想：如果“专一”只是对他人的要求，而不是对自己的控制，这专一为假。如果“专一”不管是对他人还是对自己，只是出于控制，这专一为恶。如果欲望纷纭为真，又为什么要控制，为什么不允许纷纭的幻想变为纷纭的现实？但如果那样，爱情又是什么？爱情与性欲与嫖娼的区别何在？人与兽的区别何在？爱情的不可替代的魅力是什么？这人间为什么，除了性之外又偏偏有一种叫做爱情的东西呢？偏偏有一种叫做爱情的东西，而且被赞美，被渴望，被舍生忘死的追寻？</p>
+<p>“你也不用这么激我。一个想死的人什么都不在乎。”<br>“这我信，而且一个真正想死的人也不在乎死是什么，他死就死了，不会还这么絮絮叨叨声明自己多么想死，想摆脱欲望，想成为一块石头，一把灰，说不定还想成为一块美丽的云彩，一阵自由的风…”<br>“你是说我并不想死，我是在这儿虚张声势？”<br>“不是虚张声势，是摇尾乞怜。别生气，一个真正想死的人不会再计较别人说什么。一个拿死说来说去的人，以我的经验看，其实并不是真的想死，而是…”<br>“而是什么？”<br>“而是还在…还在渴望爱…”</p>
+<p>醒着的人才会有梦想，因而它能够创造；在梦里的人反而会丧失梦想，因而他只可屈从于梦境。梦想意味着创造，是承认人的自由，而梦境意味着逃避，是承认自己的无能。</p>
+<h3 id="葵林故事（上）"><a href="#葵林故事（上）" class="headerlink" title="葵林故事（上）"></a>葵林故事（上）</h3><p>未来的时间对于她，只是一场漫长的弥留了。</p>
+<p>猥亵如果不是经由勾引而是经由暴力。其实就只有猥亵者而没有被猥亵者，只有羞辱者而没有被羞辱者。</p>
+<p>我们可以想像她的煎熬，想像的时候我们顺便把身体在沙发上摆得更舒服些，我们会愤怒，我们会用颤抖的手去点一只烟，我们会仇恨一个黑暗的时代和一种万恶的制度。我们会敬佩那个女人，但，这是有条件的。如果葵籽多多少少饱满了一些之后，那女人走向刑场英勇赴死，那几天的不屈便可流芳百世，令我们感动令我们缅怀。但如果气温几乎没有任何变化，那个女人终于经受不住折磨经受不住死的恐吓而成为叛徒，那几个世纪般的煎熬便付之东流在历史中不留任何痕迹。历史将不再记起那段时间。历史无暇记住一个人的苦难，因为多数人的利益和欲望才是历史的主人。</p>
+<h3 id="昨天"><a href="#昨天" class="headerlink" title="昨天"></a>昨天</h3><p>所谓“昨天”，也许不如干脆说“过去”，但是不，这不一样。譬如，说“我们的过去”，那只是在陈述一个事实，要是说“我们的昨天”呢？便包含了对那段时光的态度。譬如“我们从过去走来”不过是陈述一种进程，而“我们从昨天走来”却是在骄傲着一种进步。“过去”仅仅是对时间的客观描述，“昨天”却包含了对历史的主观感受。</p>
+<p>可以盼望一个人从遥远的地方回来，但是可以盼望一个人从漫长的昨天里回来吗？</p>
+<p>除此之外你让我相信什么？民主，是不是？可是民主并不是由民主创造的，这是一个非常简单的逻辑，就像你不是你自己生的一样。</p>
+<p>噢我想起来了政治是肮脏的。刚才我一时忘记了，得请你们多多包涵。是呀真的，你们可别弄脏了自己，你们珍贵的灵魂一定要供奉在一个叫做神圣的地方，那样你们就可以非常自信而且光荣地站在那儿往四下里看了，就可以一会儿流着泪赞美这个，一会儿捂着鼻子嫌恶那个，一会儿说多么多么想吻穷人脚上的牛粪，一会儿又说他们就跟牛粪一样麻木愚昧简直是半死的东西，待在屋子里你们赌咒发誓说自己要做人民的儿子，可走到街上却发现到处都是俗不可耐猥琐不堪的嘴脸。当然当然，最能衬比那圣洁的就是肮脏的政治了，还有商人，他们权欲熏心唯利是图，一群小人，尔虞我诈鼠目寸光，他们不过是一群令人作呕的市侩是根本不懂生命价值的畜生是…还有什么？总之这些家伙只配下地狱去。可你们是天使，是圣人，是背负着十字架的圣徒，所以你们的痛苦是高尚的痛苦，你们的快乐是非凡的快乐，你们的哭和笑、愁和怨、悲伤和愤怒、穷酸和寂寞都是美丽的，别人看不到这美丽只能证明他们无药可救。</p>
+<p>“你爱她？”<br>“我需要她？”</p>
+<h3 id="小街"><a href="#小街" class="headerlink" title="小街"></a>小街</h3><p>Z生来渴望高贵和美丽，但他生来，就落在平庸或丑陋之中。<br>如果他能够相信，他有理由不被他们看做“野孩子”，那么深深的走廊里流过的那一缕声音也许就会很快的消散。如果他有理由相信，他的位置只是贫穷但并不平庸并不丑陋，那缕声音就不会埋进他的记忆，成年累月地雕刻着他的心了。</p>
+<h3 id="葵林故事（下）"><a href="#葵林故事（下）" class="headerlink" title="葵林故事（下）"></a>葵林故事（下）</h3><p>主要是殃及。就是说，叛徒，会使得憎恨叛徒的人也走进叛徒曾面临的那种可怕的处境。疼痛、死亡、屈辱、殃及无辜的亲人、被扯碎的血肉和心魂…人们深知这处境的可怕，就创造了一个更为可怕的惩罚——“叛徒”，来警告已经掉进去了那些可怕处境中的人，警告他不要殃及我们，不要把我们也带进那可怕的处境。“叛徒”这个词就是这样被创造出来的，作为一种警告，作为一种惩罚，作为被殃及时的报复，作为预防被殃及而发出的威胁，作为“英雄”们的一条既能躲避痛苦又能推卸责任的活路，被创造出来了。</p>
+<p>成千上万的英雄为什么没有一个站到她的那个位置上去，把这个懦夫换下来，让殃及，在一个英雄那儿打住？</p>
+<h3 id="害怕"><a href="#害怕" class="headerlink" title="害怕"></a>害怕</h3><p>C站在门边看着那个女孩，将终身不忘她的安宁与动荡。</p>
+<p>等你看见了命运，那时，你才能真正看见爱情。</p>
+<p>人的本性倾向福音。但人根本的处境是苦难，或者是残疾。</p>
+<p>从那时一直到现在我都不明白，那一次C怎么会如此莽撞，怎么会没想到他是一种危险，残疾对一种美妙传说是恰当的道具，对一个现实中的女儿或姐妹…是真确的灾难…但那未必是不可以理解的。未必是不可以理解的——这才是C真正的苦难。</p>
+<p>回到你的位置上去。你被判定的那个位置叫做“朋友”，叫做“一般的朋友”，也叫做“但是最亲密的朋友”。从“爱情”退回到那儿去，退回去，把门关上。爱情，以最珍贵的名义在到处传扬，但在你的生命里，C，你要把它抹去。</p>
+<p>“可以剥夺，但不能放弃”。</p>
+<h3 id="孤单与孤独"><a href="#孤单与孤独" class="headerlink" title="孤单与孤独"></a>孤单与孤独</h3><p>“那么，羞耻是什么？”<br>“是与群体通行的规则相悖，与群体树立的禁忌相违。是群体的不予接受。”<br>“你是独特的，但你必须向统一让步。你是自由的，但你必须向禁忌妥协。因为你渴望亲近群体，渴望他们的接受。你害怕被群体驱逐。”</p>
+<p>证明其是简单：你还没有看见一个之时你已经看见了很多，你被她们的可爱惊扰、吸引，你才去寻找一个。</p>
+<p>我们都有残疾。别害怕，别让羞愧弄得你黯然神伤，我们的心上都有一些黑暗。</p>
+<p>而画家Z，童年那个寒冷孤独的夜晚扎根进他的心里，在那儿长大，不能“以牙还牙”但可以“以眼还眼”。Z走出人山人海，以及他走进低矮的画室、走进那根羽毛的孤傲中去，都是在“以眼还眼”。那羽毛敏感的丝丝缕缕，冷峻、飘逸、动荡甚至疯狂，无不是在喊叫着“尊严”，要洗去久远的屈辱。</p>
+<p>写作，就是为了生命的重量不被轻轻抹去。让过去和未来沉沉地存在，肩上和心里感到它们的重量，甚至压迫，甚至刺痛。现在才能存在。现在才能往来于过去和未来，成为梦想。</p>
+<p>看重我们的独特吧，看重它，感谢它，爱戴它乃至崇拜它吧。在“独特”不可能被“统一”接受的地方，在“独特”不甘就范之时，“独特”开辟出梦想之门。无数的可能之门，和无数的可能之路。“独特”走进这些门，走上这些门里的这些路。这些路可能永远不再相交。可是倘其一旦相交，我们便走进爱情，唯其一旦相交我们才可能真正得到爱情。</p>
+<h3 id="差别"><a href="#差别" class="headerlink" title="差别"></a>差别</h3><p>窥望并不都是朝向自由。窥望，并非都要把眼睛贴近类似门上那样的小孔。窥望可以在心底深藏，可以远离被窥望物，可以背转身去讳莫如深，甚至经年隔世，但窥望依旧是窥望，窥望着的心思会在不经意的一瞬间全部泄漏。那么多年，Z把自己藏起来，不管是藏进一间简陋的画室还是藏进他清高的艺术，我知道，他一直都在朝那座美如梦幻的房子窥望。像若干年前的那个冬夜一样，他一路离开却又一路回头，惊讶和羡慕，屈辱和怨恨，寒冷、自责和愤怒一齐刻骨铭心…从那时到现在，他心里的目光一直没有改变方向。</p>
+<p>你们要学会仰望，从一个“野孩子”的身上学会仰望，从一条芜杂的小街上，从一个寒冷的冬夜，从一个还不懂事因而不断回过头去张望你们的孩子的脚下学会仰望…</p>
+<p>Z，他的全部愿望，就是要在这人间注定的差别中居于强端。</p>
+<h3 id="无极之维"><a href="#无极之维" class="headerlink" title="无极之维"></a>无极之维</h3><p>“平等是一种理想，你不必要求那一定得是事实。”</p>
+<h3 id="猜测"><a href="#猜测" class="headerlink" title="猜测"></a>猜测</h3><p>WR说：很少有人能具备这样的勇气。不仅敢于追求，而且敢于放弃，敢于否定以往的迷途，即便那是你曾经全身心投入的——无论是爱情，还是事业，还是理想或者主义——如果你发现它错了，你也敢于背叛它。这其实并不容易。敢于杀死自己肉体的人并不少，但是很少有人能够杀死自己的心魂迷途，关键是杀死了旧的又没有新的，那时他们就要欺骗自己了，就要像抓住救命草一样抓住原有的东西，自欺欺人地说仍然爱那东西，仍然坚信那东西。WR说：这是最可怕的怯懦，是生命力的萎缩，是自新能力的丧失。</p>
+<h3 id="结束或开始"><a href="#结束或开始" class="headerlink" title="结束或开始"></a>结束或开始</h3><p>但这是一种有限的无限（注意不要犯规）：可以说的可以无限地说，不可以说的要囚禁在心里，可以说的并不一定是想说的，想说的呢，却大半是不宜说的。还有分寸，还有小心，还有戒备、掩饰、故作的幽默、必要的微笑、不卑不亢、不冷不热、不远不近、彬彬有礼…对了，F是说：只是排除平庸。F是说：只排除不失礼数地把你标明在一个客人的位置上，把你推开在一个距离外，又把你限定在一种距离内——对了，朋友。这位置，这距离，是一条魔谷，是一道鬼墙，是一个丑恶凶残食人魂魄的老妖，它能点金成石、化血为水、把你舍命的珍藏“刷啦”一下翻转成一块丑陋的浮云，轻飘飘随风而散…</p>
+<p>但是这个人是我吗？你是谁呢？是那个找遍世界痛不欲生的人吗？是那个从荒原里走过来从死的诱惑里走过来的人吗？你千里迢迢到这来，就是为了这样一场客客气气的相见？等了多少年啊，昼思夜梦的重逢，就是为了说这些话和听这些话吗？是呀是呀，F医生早就对你说过：这么看重实现，L，你还不是个诗人…</p>
+<p>L终于听懂了F心底的固执和苦难：如果自由但不平安，如果平安却不自由，就让往日保存在一个美丽的位置上吧，不要苛求重逢，不要独钟实现，不要怨甚至不要说…那美丽的位置也许只好在心里，在想象里，在梦里，只好在永远不能完成的你的长诗里…</p>
+<p>是差别推动了欲望，是欲望不息地去寻找平等，这样上帝就造就了一个永动的轮回。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://zzzzrf.github.io">zrf</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://zzzzrf.github.io/2025/03/09/20250222/">https://zzzzrf.github.io/2025/03/09/20250222/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://zzzzrf.github.io" target="_blank">zrf's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8F%B2%E9%93%81%E7%94%9F/">史铁生</a></div><div class="post-share"><div class="social-share" data-image="/blog_image/20250222/7b4a8bee660a1d4165f0206cb8990c3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>感谢支持</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat_pay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat_pay.jpg"/></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/02/15/20250215/" title="悉达多"><img class="cover" src="/blog_image/20250215/CMCoOScDbDY0AAV3-wBgpff5.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">悉达多</div></div><div class="info-2"><div class="info-item-1">我听遍灵魂与肉体的安排，去经历罪孽，追逐肉欲和财富，去贪慕虚荣，以陷入最可耻的绝望，以学会放弃挣扎，学会热爱世界。我不再将这个世界与我所期待的，塑造的圆满世界比照，而是接受这个世界，爱他，属于它。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/06/21/20240621/" title="好运设计"><img class="cover" src="/blog_image/20240621/1.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-21</div><div class="info-item-2">好运设计</div></div><div class="info-2"><div class="info-item-1">梦想使你迷醉，距离就成了欢乐；追求使你充实，失败和成功都是伴奏；当生命以美的形式证明其价值的时候，幸福是享受，痛苦也是享受</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">zrf</div><div class="author-info-description">求知若渴，虚心若愚</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/zzzzrf"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/zzzzrf" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:853241825@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">蹒跚学步,感谢支持!</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A6%E6%91%98"><span class="toc-number">1.</span> <span class="toc-text">书摘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E4%BD%9C%E4%B9%8B%E5%A4%9C"><span class="toc-number">1.1.</span> <span class="toc-text">写作之夜</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%8B%E7%96%BE%E4%B8%8E%E7%88%B1%E6%83%85"><span class="toc-number">1.2.</span> <span class="toc-text">残疾与爱情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E4%BA%A1%E5%BA%8F%E5%B9%95"><span class="toc-number">1.3.</span> <span class="toc-text">死亡序幕</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%A5%E5%B9%B4%E4%B9%8B%E9%97%A8"><span class="toc-number">1.4.</span> <span class="toc-text">童年之门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%8B%E4%BA%BA"><span class="toc-number">1.5.</span> <span class="toc-text">恋人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%97%A5"><span class="toc-number">1.6.</span> <span class="toc-text">生日</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8D%E4%BA%B2"><span class="toc-number">1.7.</span> <span class="toc-text">母亲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%BA%E7%BE%A4"><span class="toc-number">1.8.</span> <span class="toc-text">人群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8F%E5%A4%A9%E7%9A%84%E5%A2%99"><span class="toc-number">1.9.</span> <span class="toc-text">夏天的墙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E8%89%B2%E9%B8%9F"><span class="toc-number">1.10.</span> <span class="toc-text">白色鸟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E6%9D%A8%E6%A0%91"><span class="toc-number">1.11.</span> <span class="toc-text">白杨树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%B2%E6%9C%9B"><span class="toc-number">1.12.</span> <span class="toc-text">欲望</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%91%B5%E6%9E%97%E6%95%85%E4%BA%8B%EF%BC%88%E4%B8%8A%EF%BC%89"><span class="toc-number">1.13.</span> <span class="toc-text">葵林故事（上）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%A8%E5%A4%A9"><span class="toc-number">1.14.</span> <span class="toc-text">昨天</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E8%A1%97"><span class="toc-number">1.15.</span> <span class="toc-text">小街</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%91%B5%E6%9E%97%E6%95%85%E4%BA%8B%EF%BC%88%E4%B8%8B%EF%BC%89"><span class="toc-number">1.16.</span> <span class="toc-text">葵林故事（下）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B3%E6%80%95"><span class="toc-number">1.17.</span> <span class="toc-text">害怕</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A4%E5%8D%95%E4%B8%8E%E5%AD%A4%E7%8B%AC"><span class="toc-number">1.18.</span> <span class="toc-text">孤单与孤独</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%AE%E5%88%AB"><span class="toc-number">1.19.</span> <span class="toc-text">差别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E6%9E%81%E4%B9%8B%E7%BB%B4"><span class="toc-number">1.20.</span> <span class="toc-text">无极之维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8C%9C%E6%B5%8B"><span class="toc-number">1.21.</span> <span class="toc-text">猜测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E6%88%96%E5%BC%80%E5%A7%8B"><span class="toc-number">1.22.</span> <span class="toc-text">结束或开始</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/03/09/20250222/" title="务虚笔记"><img src="/blog_image/20250222/7b4a8bee660a1d4165f0206cb8990c3.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="务虚笔记"/></a><div class="content"><a class="title" href="/2025/03/09/20250222/" title="务虚笔记">务虚笔记</a><time datetime="2025-03-09T02:15:21.000Z" title="发表于 2025-03-09 10:15:21">2025-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/20250215/" title="悉达多"><img src="/blog_image/20250215/CMCoOScDbDY0AAV3-wBgpff5.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="悉达多"/></a><div class="content"><a class="title" href="/2025/02/15/20250215/" title="悉达多">悉达多</a><time datetime="2025-02-15T11:17:26.000Z" title="发表于 2025-02-15 19:17:26">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/07/06/rpi_HelloWorld/" title="裸机程序hello world"><img src="/blog_image/rpi_HelloWorld/hello_world.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="裸机程序hello world"/></a><div class="content"><a class="title" href="/2024/07/06/rpi_HelloWorld/" title="裸机程序hello world">裸机程序hello world</a><time datetime="2024-07-06T15:42:18.000Z" title="发表于 2024-07-06 23:42:18">2024-07-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/21/20240621/" title="好运设计"><img src="/blog_image/20240621/1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="好运设计"/></a><div class="content"><a class="title" href="/2024/06/21/20240621/" title="好运设计">好运设计</a><time datetime="2024-06-21T15:37:14.000Z" title="发表于 2024-06-21 23:37:14">2024-06-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/16/vxlan_rfc7348/" title="VXLAN RFC7348"><img src="/blog_image/rfc7348/00.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VXLAN RFC7348"/></a><div class="content"><a class="title" href="/2024/06/16/vxlan_rfc7348/" title="VXLAN RFC7348">VXLAN RFC7348</a><time datetime="2024-06-16T10:32:24.000Z" title="发表于 2024-06-16 18:32:24">2024-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/06/08/MakefileTutorial/" title="Makefile Tutorial"><img src="/blog_image/Makefile/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Makefile Tutorial"/></a><div class="content"><a class="title" href="/2024/06/08/MakefileTutorial/" title="Makefile Tutorial">Makefile Tutorial</a><time datetime="2024-06-08T07:19:25.000Z" title="发表于 2024-06-08 15:19:25">2024-06-08</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/back.jpeg);"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By zrf</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to zrf's <a href="https://zzzzrf.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = "留下你的足迹o(*￣▽￣*)ブ"
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'mHV5QZzhNBabMj6y5kw2SYqq-gzGzoHsz',
+      appKey: '2fvaL99PG3kQNK15rc70qhMV',
+      avatar: 'monsterid',
+      serverURLs: 'https://mhv5qzzh.lc-cn-n1-shared.com',
+      emojiMaps: "",
+      visitor: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Valine' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
